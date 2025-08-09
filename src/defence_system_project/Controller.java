@@ -53,4 +53,32 @@ public class Controller {
     public void setPrivateMessageToMain(String text) {
         observers[3].sendMessage(text);
     }
+    
+    public void setAreaStatus(boolean value){
+        observers[0].areaStatus(value);
+        observers[1].areaStatus(value);
+        observers[2].areaStatus(value);
+    }
+    
+    public void setHAmmor(int value){
+        observers[3].updateHAmmor(value);
+    }
+    
+    public void setSAmmor(int value){
+        observers[3].updateSAmmor(value);
+    }
+    
+    public void setTAmmor(int value){
+        observers[3].updateTAmmor(value);
+    }
+    
+    public void setHPos(boolean value){
+        observers[3].updateHPos(value);
+    }
+    public void setTPos(boolean value){
+        observers[3].updateTPos(value);
+    }
+    public void setSPos(boolean value){
+        observers[3].updateSPos(value);
+    }
 }

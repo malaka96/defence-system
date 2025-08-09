@@ -9,7 +9,16 @@ package defence_system_project;
  * @author USER
  */
 abstract class Observer extends javax.swing.JFrame {
-    public void onSliderValueChange(int value){}
     abstract public void sendMessage(String text);
+    public void onSliderValueChange(int value){}
+    public void areaStatus(boolean value){}
+    
+    public void updateHAmmor(int value){}
+    public void updateSAmmor(int value){}
+    public void updateTAmmor(int value){}
+    
+    public void updateHPos(boolean value){}
+    public void updateSPos(boolean value){}
+    public void updateTPos(boolean value){}
     
 }

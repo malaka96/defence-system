@@ -13,6 +13,8 @@ class Tank extends Observer {
     private Controller controller;
 
     private int sliderValue = 0;
+    
+    private int ammor = 17;
 
     /**
      * Creates new form Helicopter
@@ -37,7 +39,7 @@ class Tank extends Observer {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
+        ammorSpinner = new javax.swing.JSpinner();
         positionCheck = new javax.swing.JCheckBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
@@ -46,14 +48,20 @@ class Tank extends Observer {
         newMessageTextField = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         sendbtn = new javax.swing.JButton();
+        areaLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tank");
 
         shootbtn.setText("Shoot");
         shootbtn.setEnabled(false);
+        shootbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                shootbtnActionPerformed(evt);
+            }
+        });
 
-        misslebtn.setText("Missile Operation");
+        misslebtn.setText("Rotate Shooting");
         misslebtn.setEnabled(false);
 
         laserbtn.setText("Radar Opration");
@@ -62,6 +70,10 @@ class Tank extends Observer {
         jLabel1.setText("Soldier Count");
 
         jLabel2.setText("Ammo Count");
+
+        jSpinner1.setValue(3);
+
+        ammorSpinner.setValue(17);
 
         positionCheck.setText("Position");
         positionCheck.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -120,7 +132,8 @@ class Tank extends Observer {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(shootbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(misslebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(misslebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(areaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(181, 181, 181)
@@ -130,7 +143,7 @@ class Tank extends Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                            .addComponent(jSpinner2))
+                            .addComponent(ammorSpinner))
                         .addGap(63, 63, 63))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
@@ -160,10 +173,12 @@ class Tank extends Observer {
                         .addComponent(positionCheck))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ammorSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(19, 19, 19)
+                        .addComponent(areaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(5, 5, 5)
@@ -188,6 +203,7 @@ class Tank extends Observer {
             misslebtn.setEnabled(false);
             laserbtn.setEnabled(false);
         }
+        controller.setTPos(positionCheck.isSelected());
     }//GEN-LAST:event_positionCheckActionPerformed
 
     private void newMessageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMessageTextFieldActionPerformed
@@ -225,6 +241,13 @@ class Tank extends Observer {
             newMessageTextField.setText("");
         }
     }//GEN-LAST:event_sendbtnActionPerformed
+
+    private void shootbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shootbtnActionPerformed
+        // TODO add your handling code here:
+        ammor--;
+        ammorSpinner.setValue(ammor);
+        controller.setTAmmor(ammor);
+    }//GEN-LAST:event_shootbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,13 +311,14 @@ class Tank extends Observer {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSpinner ammorSpinner;
+    private javax.swing.JLabel areaLabel;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JButton laserbtn;
     private javax.swing.JTextArea messageTextArea;
@@ -308,5 +332,11 @@ class Tank extends Observer {
     @Override
     public void sendMessage(String text) {
         messageTextArea.append(text);
+    }
+    
+    @Override
+    public void areaStatus(boolean value){
+        if(value == true)areaLabel.setText("Area is clear");
+        else areaLabel.setText("Area is not clear");
     }
 }

@@ -12,6 +12,9 @@ public class MainController extends Observer {
 
     private Controller controller;
 
+    private int[] ammorArray = new int[10];
+    private boolean[] positionArray = new boolean[10];
+
     /**
      * Creates new form MainController
      *
@@ -40,9 +43,9 @@ public class MainController extends Observer {
         fuelLabel = new javax.swing.JLabel();
         ammoLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        posCheck = new javax.swing.JCheckBox();
         slider = new javax.swing.JSlider();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        areaCheck = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         messageTextArea = new javax.swing.JTextArea();
         newMessageTextField = new javax.swing.JTextField();
@@ -69,17 +72,18 @@ public class MainController extends Observer {
 
         jLabel3.setText("Ammo Amount");
 
-        soldierLabel.setText("0");
+        soldierLabel.setText("-");
 
-        fuelLabel.setText("0");
+        fuelLabel.setText("-");
 
         ammoLabel.setText("0");
 
         jLabel4.setText("Position");
 
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        posCheck.setEnabled(false);
+        posCheck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                posCheckActionPerformed(evt);
             }
         });
 
@@ -90,7 +94,12 @@ public class MainController extends Observer {
             }
         });
 
-        jCheckBox2.setText("Area Clear");
+        areaCheck.setText("Area Clear");
+        areaCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                areaCheckActionPerformed(evt);
+            }
+        });
 
         messageTextArea.setColumns(20);
         messageTextArea.setRows(5);
@@ -142,12 +151,12 @@ public class MainController extends Observer {
                                     .addComponent(ammoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jCheckBox1))))
+                                .addComponent(posCheck))))
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(newMessageTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(areaCheck, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,7 +171,7 @@ public class MainController extends Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(jCheckBox2))
+                    .addComponent(areaCheck))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -188,7 +197,7 @@ public class MainController extends Observer {
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jCheckBox1))
+                            .addComponent(posCheck))
                         .addGap(38, 38, 38)
                         .addComponent(slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -201,11 +210,14 @@ public class MainController extends Observer {
 
     private void dropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropdownActionPerformed
         // TODO add your handling code here:
+        int selectedValue = dropdown.getSelectedIndex();
+        ammoLabel.setText(String.valueOf(ammorArray[selectedValue]));
+        posCheck.setSelected(positionArray[selectedValue]);
     }//GEN-LAST:event_dropdownActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void posCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_posCheckActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_posCheckActionPerformed
 
     private void newMessageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMessageTextFieldActionPerformed
         // TODO add your handling code here:
@@ -231,11 +243,11 @@ public class MainController extends Observer {
             controller.setMessage("\nControl Room(c2e) : " + newMessageTextField.getText());
             //messageTextArea.append("\nControl Room(c2e) : " + newMessageTextField.getText());
             newMessageTextField.setText("");
-        } else if(selectedValue.equals("Tank")){
+        } else if (selectedValue.equals("Tank")) {
             controller.setPrivateMessageToTank("\nControl Room(c2t) : " + newMessageTextField.getText());
             messageTextArea.append("\nControl Room(c2t) : " + newMessageTextField.getText());
             newMessageTextField.setText("");
-        } else if(selectedValue.equals("Submarine")){
+        } else if (selectedValue.equals("Submarine")) {
             controller.setPrivateMessageToSubmarine("\nControl Room(c2s) : " + newMessageTextField.getText());
             messageTextArea.append("\nControl Room(c2s) : " + newMessageTextField.getText());
             newMessageTextField.setText("");
@@ -243,6 +255,11 @@ public class MainController extends Observer {
 
 
     }//GEN-LAST:event_sendbtnActionPerformed
+
+    private void areaCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_areaCheckActionPerformed
+        // TODO add your handling code here:
+        controller.setAreaStatus(areaCheck.isSelected());
+    }//GEN-LAST:event_areaCheckActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,11 +298,10 @@ public class MainController extends Observer {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ammoLabel;
+    private javax.swing.JCheckBox areaCheck;
     private javax.swing.JComboBox<String> dropdown;
     private javax.swing.JLabel fuelLabel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -296,6 +312,7 @@ public class MainController extends Observer {
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea messageTextArea;
     private javax.swing.JTextField newMessageTextField;
+    private javax.swing.JCheckBox posCheck;
     private javax.swing.JButton sendbtn;
     private javax.swing.JSlider slider;
     private javax.swing.JLabel soldierLabel;
@@ -304,5 +321,53 @@ public class MainController extends Observer {
     @Override
     public void sendMessage(String text) {
         messageTextArea.append(text);
+    }
+
+    @Override
+    public void updateHAmmor(int value) {
+        ammorArray[0] = value;
+        if (dropdown.getSelectedIndex() == 0) {
+            ammoLabel.setText(String.valueOf(ammorArray[0]));
+        }
+    }
+
+    @Override
+    public void updateSAmmor(int value) {
+        ammorArray[2] = value;
+        if (dropdown.getSelectedIndex() == 2) {
+            ammoLabel.setText(String.valueOf(ammorArray[2]));
+        }
+    }
+    
+    @Override
+    public void updateTAmmor(int value){
+        ammorArray[1] = value;
+        if (dropdown.getSelectedIndex() == 1) {
+            ammoLabel.setText(String.valueOf(ammorArray[1]));
+        }
+    }
+    
+    @Override
+    public void updateHPos(boolean value){
+        positionArray[0] = value;
+        if (dropdown.getSelectedIndex() == 0) {
+            posCheck.setSelected(positionArray[0]);
+        }
+    }
+    
+    @Override
+    public void updateTPos(boolean value){
+        positionArray[1] = value;
+        if (dropdown.getSelectedIndex() == 1) {
+            posCheck.setSelected(positionArray[1]);
+        }
+    }
+    
+    @Override
+    public void updateSPos(boolean value){
+        positionArray[2] = value;
+        if (dropdown.getSelectedIndex() == 2) {
+            posCheck.setSelected(positionArray[2]);
+        }
     }
 }
