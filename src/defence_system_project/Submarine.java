@@ -12,6 +12,8 @@ public class Submarine extends Observer {
     
     private Controller controller;
 
+    private AudioPlayer audioPlayer;
+    
     private int sliderValue = 0;
     
     private int soldier = 8;
@@ -22,6 +24,8 @@ public class Submarine extends Observer {
      * @param controller
      */
     public Submarine(Controller controller) {
+        audioPlayer = new AudioPlayer();
+        audioPlayer.load("src/resources/submarine-gun-shot.wav");
         this.controller = controller;
         initComponents();
     }
@@ -246,6 +250,7 @@ public class Submarine extends Observer {
 
     private void shootbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shootbtnActionPerformed
         // TODO add your handling code here:
+        audioPlayer.play();
         ammor--;
         ammorSpinner.setValue(ammor);
         controller.setSAmmor(ammor);

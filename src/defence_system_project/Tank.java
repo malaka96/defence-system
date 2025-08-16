@@ -10,6 +10,8 @@ package defence_system_project;
  */
 class Tank extends Observer {
     
+    private AudioPlayer audioPlayer;
+    
     private Controller controller;
 
     private int sliderValue = 0;
@@ -20,6 +22,8 @@ class Tank extends Observer {
      * Creates new form Helicopter
      */
     public Tank(Controller controller) {
+        audioPlayer = new AudioPlayer();
+        audioPlayer.load("src/resources/tank-gun-shot.wav");
         this.controller = controller;
         initComponents();
     }
@@ -244,6 +248,7 @@ class Tank extends Observer {
 
     private void shootbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shootbtnActionPerformed
         // TODO add your handling code here:
+        audioPlayer.play();
         ammor--;
         ammorSpinner.setValue(ammor);
         controller.setTAmmor(ammor);

@@ -10,6 +10,8 @@ package defence_system_project;
  */
 public class Helicopter extends Observer {
     
+    private AudioPlayer audioPlayer;
+    
     private Controller controller;
 
     private int sliderValue = 0;
@@ -22,6 +24,8 @@ public class Helicopter extends Observer {
      * @param controller
      */
     public Helicopter(Controller controller) {
+        audioPlayer = new AudioPlayer();
+        audioPlayer.load("src/resources/helicopter-gun-shot.wav");
         this.controller = controller;
         initComponents();
     }
@@ -247,6 +251,7 @@ public class Helicopter extends Observer {
 
     private void shootbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shootbtnActionPerformed
         // TODO add your handling code
+        audioPlayer.play();
         ammor--;
         ammorSpinner.setValue(ammor);
         controller.setHAmmor(ammor);
